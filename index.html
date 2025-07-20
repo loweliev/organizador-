@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inventario y Actividades</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1f1f1f">
+  <link rel="icon" href="icon-192.png">
+
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🧰 Inventario & Calendario</h1>
+      <nav>
+        <button id="btn-inventario" class="active">Inventario</button>
+        <button id="btn-calendario">Actividades</button>
+      </nav>
+    </header>
+
+    <!-- Sección Inventario -->
+    <section id="seccion-inventario" class="visible">
+      <form id="form-producto">
+        <input type="text" id="nombre" placeholder="Nombre del producto" required />
+        <input type="number" id="cantidad" placeholder="Cantidad" required />
+        <select id="categoria" required>
+          <option value="">Categoría</option>
+          <option value="Dormir">Dormir</option>
+          <option value="Cocina">Cocina</option>
+          <option value="Ropa">Ropa</option>
+          <option value="Accesorios">Accesorios</option>
+          <option value="Limpieza">Limpieza</option>
+          <option value="Electrónica">Electrónica</option>
+          <option value="Papelería">Papelería</option>
+          <option value="Otros">Otros</option>
+        </select>
+        <select id="ubicacion" required>
+          <option value="">Ubicación</option>
+          <option value="Baño">Baño</option>
+          <option value="Cuarto 1">Cuarto 1</option>
+        </select>
+        <input type="date" id="fecha" />
+        <button type="submit">Agregar</button>
+      </form>
+
+      <!-- FILTROS Y BUSCADOR -->
+      <div id="filtros">
+        <input type="text" id="buscar" placeholder="🔍 Buscar por nombre..." />
+        <select id="filtro-categoria">
+          <option value="">Todas las categorías</option>
+          <option value="Dormir">Dormir</option>
+          <option value="Cocina">Cocina</option>
+          <option value="Ropa">Ropa</option>
+          <option value="Accesorios">Accesorios</option>
+          <option value="Limpieza">Limpieza</option>
+          <option value="Electrónica">Electrónica</option>
+          <option value="Papelería">Papelería</option>
+          <option value="Otros">Otros</option>
+        </select>
+        <select id="filtro-ubicacion">
+          <option value="">Todas las ubicaciones</option>
+          <option value="Baño">Baño</option>
+          <option value="Cuarto 1">Cuarto 1</option>
+        </select>
+        <input type="number" id="filtro-cantidad" min="0" placeholder="Cantidad mínima" />
+      </div>
+
+
+      <button id="btn-exportar">📥 Exportar a Excel</button>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Categoría</th>
+            <th>Ubicación</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-productos"></tbody>
+      </table>
+
+      <div id="faltantes"></div>
+
+      <div id="faltantes-manuales">
+        <h3>📝 Agregar Faltantes Manuales</h3>
+        <form id="form-faltante-manual">
+          <input type="text" id="nombre-faltante" placeholder="Nombre del producto que falta" required />
+          <button type="submit">Agregar</button>
+        </form>
+        <ul id="lista-faltantes-manuales"></ul>
+      </div>
+
+      <div id="lista-general">
+        <h3>📋 Lista General Consolidada</h3>
+        <ul id="consolidado"></ul>
+        <button id="exportar-general">Exportar Lista General</button>
+      </div>
+    </section>
+
+    <!-- Sección Calendario -->
+    <section id="seccion-calendario">
+      <div class="cal-header">
+        <button id="prev-mes">«</button>
+        <h2 id="mes-anio"></h2>
+        <button id="next-mes">»</button>
+      </div>
+      <div id="dias-semana">
+        <div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div><div>Dom</div>
+      </div>
+      <div id="calendario"></div>
+
+      <div id="modal">
+        <div class="modal-content">
+          <h3>Actividades del <span id="fecha-modal"></span></h3>
+          <ul id="lista-actividades"></ul>
+          <input type="text" id="nueva-actividad" placeholder="Nueva actividad..." />
+          <button id="agregar-actividad">Agregar</button>
+          <button id="cerrar-modal">Cerrar</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script src="script.js"></script>
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(() => console.log('✅ Service Worker registrado'))
+      .catch(err => console.error('❌ Error en el Service Worker', err));
+  }
+</script>
+
+</body>
+</html>
