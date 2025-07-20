@@ -1,23 +1,9 @@
-self.addEventListener("install", (e) => {
-  e.waitUntil(
-    caches.open("app-store").then((cache) => {
-      return cache.addAll([
-        "./",
-        "./index.html",
-        "./style.css",
-        "./script.js",
-        "./manifest.json",
-        "./icon-192.png",
-        "./icon-512.png"
-      ]);
-    })
-  );
-});
-
-self.addEventListener("fetch", (e) => {
-  e.respondWith(
-    caches.match(e.request).then((resp) => {
-      return resp || fetch(e.request);
-    })
-  );
-});
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./service-worker.js')
+        .then(reg => console.log("✅ Service Worker registrado", reg))
+        .catch(err => console.error("❌ Error al registrar SW:", err));
+    });
+  }
+</script>
